@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const errorHandler = require('../middlewares/errorHandler');
-const { createUsers } = require('../controllers/usersControllers');
+const { createUsers, logUsers } = require('../controllers/usersControllers');
 
 const app = express();
 
@@ -17,6 +17,7 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.post('/users', createUsers);
+app.post('/login', logUsers);
 
 app.use(errorHandler);
 

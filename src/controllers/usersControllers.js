@@ -1,5 +1,5 @@
-const { createOneUser } = require('../services/usersServices');
-const { created } = require('../utils/dictionary');
+const { createOneUser, userLogin } = require('../services/usersServices');
+const { created, success } = require('../utils/dictionary');
 
 const createUsers = async (req, res, next) => {
   try {
@@ -13,6 +13,20 @@ const createUsers = async (req, res, next) => {
   }
 };
 
+const logUsers = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const token = await userLogin(email, password);
+
+    return res.status(success).json({ message: token });
+  } catch (error) {
+    console.log(`LOG USERS -> ${error.message}`);
+    next(error);
+  }
+};
+
 module.exports = {
   createUsers,
+  logUsers,
 };
