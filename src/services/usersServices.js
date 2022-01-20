@@ -23,6 +23,7 @@ const createOneUser = async (name, email, password) => {
     status: badRequest,
     message: 'Invalid entries. Try again.',
   };
+
   await entriesValidation(name, email, password, error);
   await emailValidation(email, badRequest, 'Invalid entries. Try again.');
 
@@ -46,6 +47,7 @@ const userLogin = async (email, password) => {
     status: unauthorized,
     message: 'All fields must be filled',
   };
+
   await entriesValidation('default', email, password, error);
   await emailValidation(email, unauthorized, 'Incorrect username or password');
 
