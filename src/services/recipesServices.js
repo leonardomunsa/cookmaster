@@ -1,6 +1,6 @@
-const { createRecipe, getRecipes } = require('../models/recipesModels');
+const { createRecipe, getRecipes, getRecipe } = require('../models/recipesModels');
 const errorHandling = require('../utils/errorHandling');
-const { badRequest } = require('../utils/dictionary');
+const { badRequest, notFound } = require('../utils/dictionary');
 
 const entriesValidation = async (
   name,
@@ -36,7 +36,15 @@ const getAllRecipes = async () => {
   return recipes;
 };
 
+const getOneRecipe = async (id) => {
+  const recipe = await getRecipe(id);
+  if (!recipe || recipe === null) throw errorHandling(notFound, 'recipe not found');
+
+  return recipe;
+};
+
 module.exports = {
   createOneRecipe,
   getAllRecipes,
+  getOneRecipe,
 };
