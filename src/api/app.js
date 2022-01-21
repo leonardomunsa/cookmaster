@@ -4,7 +4,12 @@ const bodyParser = require('body-parser');
 const auth = require('../middlewares/auth');
 const errorHandler = require('../middlewares/errorHandler');
 const { createUsers, logUsers } = require('../controllers/usersControllers');
-const { createRecipes, getRecipes, getRecipe } = require('../controllers/recipesControllers');
+const {
+  createRecipes,
+  getRecipes,
+  getRecipe,
+  updateRecipes,
+} = require('../controllers/recipesControllers');
 
 const app = express();
 
@@ -23,6 +28,7 @@ app.post('/login', logUsers);
 app.post('/recipes', auth, createRecipes);
 app.get('/recipes', getRecipes);
 app.get('/recipes/:id', getRecipe);
+app.put('/recipes/:id', auth, updateRecipes);
 
 app.use(errorHandler);
 

@@ -1,4 +1,4 @@
-const { createRecipe, getRecipes, getRecipe } = require('../models/recipesModels');
+const { createRecipe, getRecipes, getRecipe, updateRecipe } = require('../models/recipesModels');
 const errorHandling = require('../utils/errorHandling');
 const { badRequest, notFound } = require('../utils/dictionary');
 
@@ -43,8 +43,17 @@ const getOneRecipe = async (id) => {
   return recipe;
 };
 
+const updateOneRecipe = async (recipeId, recipe) => {
+  await updateRecipe(recipeId, recipe);
+
+  const updatedRecipe = await getRecipe(recipeId);
+
+  return updatedRecipe;
+};
+
 module.exports = {
   createOneRecipe,
   getAllRecipes,
   getOneRecipe,
+  updateOneRecipe,
 };

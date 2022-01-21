@@ -1,4 +1,9 @@
-const { createOneRecipe, getAllRecipes, getOneRecipe } = require('../services/recipesServices');
+const {
+  createOneRecipe,
+  getAllRecipes,
+  getOneRecipe,
+  updateOneRecipe,
+} = require('../services/recipesServices');
 const { created, success } = require('../utils/dictionary');
 
 const createRecipes = async (req, res, next) => {
@@ -6,8 +11,13 @@ const createRecipes = async (req, res, next) => {
     const { name, ingredients, preparation } = req.body;
     const { _id } = req.user;
 
-    const recipeCreated = await createOneRecipe(name, ingredients, preparation, _id);
-    
+    const recipeCreated = await createOneRecipe(
+      name,
+      ingredients,
+      preparation,
+      _id,
+    );
+
     return res.status(created).json(recipeCreated);
   } catch (error) {
     console.log(`POST CREATE RECIPES -> ${error.message}`);
@@ -29,12 +39,32 @@ const getRecipes = async (req, res, next) => {
 const getRecipe = async (req, res, next) => {
   try {
     const { id } = req.params;
-    
+
     const recipe = await getOneRecipe(id);
-    
+
     return res.status(success).json(recipe);
   } catch (error) {
     console.log(`GET RECIPE -> ${error.message}`);
+    next(error);
+  }
+};
+
+const updateRecipes = async (req, res, next) => {
+  try {
+    const { name, ingredients, preparation } = req.body;
+    const { id } = req.params;
+
+    const recipe = {
+      name,
+      ingredients,
+      preparation,
+    };
+
+    const updatedRecipe = await updateOneRecipe(id, recipe);
+
+    return res.status(success).json(updatedRecipe);
+  } catch (error) {
+    console.log(`PUT RECIPE -> ${error.message}`);
     next(error);
   }
 };
@@ -43,4 +73,5 @@ module.exports = {
   createRecipes,
   getRecipes,
   getRecipe,
+  updateRecipes,
 };
