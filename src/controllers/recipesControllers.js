@@ -3,8 +3,9 @@ const {
   getAllRecipes,
   getOneRecipe,
   updateOneRecipe,
+  deleteOneRecipe,
 } = require('../services/recipesServices');
-const { created, success } = require('../utils/dictionary');
+const { created, success, noContent } = require('../utils/dictionary');
 
 const createRecipes = async (req, res, next) => {
   try {
@@ -69,9 +70,23 @@ const updateRecipes = async (req, res, next) => {
   }
 };
 
+const deleteRecipes = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    await deleteOneRecipe(id);
+
+    return res.status(noContent).json();
+  } catch (error) {
+    console.log(`DELETE RECIPE -> ${error.message}`);
+    next(error);
+  }
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
   getRecipe,
   updateRecipes,
+  deleteRecipes,
 };

@@ -1,4 +1,10 @@
-const { createRecipe, getRecipes, getRecipe, updateRecipe } = require('../models/recipesModels');
+const {
+  createRecipe,
+  getRecipes,
+  getRecipe,
+  updateRecipe,
+  deleteRecipe,
+} = require('../models/recipesModels');
 const errorHandling = require('../utils/errorHandling');
 const { badRequest, notFound } = require('../utils/dictionary');
 
@@ -8,7 +14,9 @@ const entriesValidation = async (
   preparation,
   { status, message },
 ) => {
-  if (!name || !ingredients || !preparation) { throw errorHandling(status, message); }
+  if (!name || !ingredients || !preparation) {
+    throw errorHandling(status, message);
+  }
 };
 
 const createOneRecipe = async (name, ingredients, preparation, userId) => {
@@ -38,7 +46,7 @@ const getAllRecipes = async () => {
 
 const getOneRecipe = async (id) => {
   const recipe = await getRecipe(id);
-  if (!recipe || recipe === null) throw errorHandling(notFound, 'recipe not found');
+  if (!recipe || recipe === null) { throw errorHandling(notFound, 'recipe not found'); }
 
   return recipe;
 };
@@ -51,9 +59,14 @@ const updateOneRecipe = async (recipeId, recipe) => {
   return updatedRecipe;
 };
 
+const deleteOneRecipe = async (id) => {
+  await deleteRecipe(id);
+};
+
 module.exports = {
   createOneRecipe,
   getAllRecipes,
   getOneRecipe,
   updateOneRecipe,
+  deleteOneRecipe,
 };

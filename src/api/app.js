@@ -9,6 +9,7 @@ const {
   getRecipes,
   getRecipe,
   updateRecipes,
+  deleteRecipes,
 } = require('../controllers/recipesControllers');
 
 const app = express();
@@ -29,6 +30,7 @@ app.post('/recipes', auth, createRecipes);
 app.get('/recipes', getRecipes);
 app.get('/recipes/:id', getRecipe);
 app.put('/recipes/:id', auth, updateRecipes);
+app.delete('/recipes/:id', auth, deleteRecipes);
 
 app.use(errorHandler);
 
