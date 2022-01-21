@@ -1,8 +1,10 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const auth = require('../middlewares/auth');
 const errorHandler = require('../middlewares/errorHandler');
 const { createUsers, logUsers } = require('../controllers/usersControllers');
+const { createRecipes } = require('../controllers/recipesControllers');
 
 const app = express();
 
@@ -18,6 +20,7 @@ app.get('/', (request, response) => {
 
 app.post('/users', createUsers);
 app.post('/login', logUsers);
+app.post('/recipes', auth, createRecipes);
 
 app.use(errorHandler);
 

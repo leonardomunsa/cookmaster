@@ -19,7 +19,7 @@ const logUsers = async (req, res, next) => {
 
     const token = await userLogin(email, password);
 
-    return res.status(success).json({ message: token });
+    return res.status(success).json({ token });
   } catch (error) {
     console.log(`LOG USERS -> ${error.message}`);
     next(error);

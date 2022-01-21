@@ -1,23 +1,25 @@
 const jwt = require('jsonwebtoken');
+const res = require('express/lib/response');
+const { unauthorized } = require('../utils/dictionary');
 
-const SECRET_PASSWORD = 'BIGMEGAJAMES';
+const API_SECRET = 'ABC123456';
 
 const JWT_CONFIG = {
-  expiresIn: '5h',
+  expiresIn: '1h',
   algorithm: 'HS256',
 };
 
-const generateToken = (data) => jwt.sign({ data }, SECRET_PASSWORD, JWT_CONFIG);
+const generateToken = (data) => jwt.sign({ data }, API_SECRET, JWT_CONFIG);
 
 const verifyToken = (token) => {
   try {
-    const decoded = jwt.verify(token, SECRET_PASSWORD);
-    const { username } = decoded.data;
+    const decoded = jwt.verify(token, API_SECRET);
+    const user = decoded.data;
 
-    return username;
+    return user;
   } catch (error) {
-    console.log('FALHA NA AUTENTICAÇÃO');
-    return null;
+    console.log(`FALHA NA AUTENTICAÇÃO -> ${error.message}`);
+    return res.status(unauthorized).json({ message: 'jwt malformed' });
   }
 };
 

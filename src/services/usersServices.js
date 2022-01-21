@@ -30,11 +30,11 @@ const createOneUser = async (name, email, password) => {
   const userEmail = await findUserByEmail(email);
   if (userEmail) throw errorHandling(conflict, 'Email already registered');
 
-  const user = await createUser(name, email, password);
+  const { userId } = await createUser(name, email, password);
 
   return {
     user: {
-      _id: user.insertedId,
+      _id: userId,
       name,
       email,
       role: 'user',
@@ -56,9 +56,9 @@ const userLogin = async (email, password) => {
     throw errorHandling(unauthorized, 'Incorrect username or password');
   }
 
-  const { password: _password, ...userWithoutPassword } = user;
+  const { password: _password, name: _name, ...userId } = user;
 
-  const token = authService.generateToken(userWithoutPassword);
+  const token = authService.generateToken(userId);
 
   return token;
 };
