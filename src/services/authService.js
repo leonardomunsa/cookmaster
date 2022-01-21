@@ -1,6 +1,4 @@
 const jwt = require('jsonwebtoken');
-const res = require('express/lib/response');
-const { unauthorized } = require('../utils/dictionary');
 
 const API_SECRET = 'ABC123456';
 
@@ -19,7 +17,7 @@ const verifyToken = (token) => {
     return user;
   } catch (error) {
     console.log(`FALHA NA AUTENTICAÇÃO -> ${error.message}`);
-    return res.status(unauthorized).json({ message: 'jwt malformed' });
+    return null;
   }
 };
 

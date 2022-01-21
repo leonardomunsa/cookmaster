@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     if (!authorization) throw errorHandling(unauthorized, 'missing auth token');
 
     const user = authService.verifyToken(authorization);
-    if (!user) throw errorHandling(unauthorized, 'jwt malformed');
+    if (!user) return res.status(unauthorized).json({ message: 'jwt malformed' });
 
     req.user = user;
     next();
