@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-const API_SECRET = 'ABC123456';
+const API_SECRET = 'BIGMEGAJAMES';
 
 const JWT_CONFIG = {
-  expiresIn: '1h',
+  expiresIn: '5h',
   algorithm: 'HS256',
 };
 

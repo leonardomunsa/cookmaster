@@ -56,9 +56,9 @@ const userLogin = async (email, password) => {
     throw errorHandling(unauthorized, 'Incorrect username or password');
   }
 
-  const { password: _password, name: _name, ...userId } = user;
+  const { password: _password, name: _name, ...userInfos } = user;
 
-  const token = authService.generateToken(userId);
+  const token = authService.generateToken(userInfos);
 
   return token;
 };
