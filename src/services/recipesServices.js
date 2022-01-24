@@ -5,6 +5,7 @@ const {
   updateRecipe,
   deleteRecipe,
   uploadImage,
+  getImage,
 } = require('../models/recipesModels');
 const errorHandling = require('../utils/errorHandling');
 const { badRequest, notFound } = require('../utils/dictionary');
@@ -72,6 +73,12 @@ const uploadOneImage = async (id, img) => {
   return recipeUpdated;
 };
 
+const getOneImage = async (img) => {
+  const image = await getImage(img);
+
+  return image;
+};
+
 module.exports = {
   createOneRecipe,
   getAllRecipes,
@@ -79,4 +86,5 @@ module.exports = {
   updateOneRecipe,
   deleteOneRecipe,
   uploadOneImage,
+  getOneImage,
 };

@@ -51,6 +51,15 @@ const uploadImage = async (id, img) => {
     );
 };
 
+const getImage = async (img) => {
+  const db = await connection();
+  const image = await db
+    .collection('recipes')
+    .findOne({ image: `localhost:3000/src/uploads/${img}` });
+
+  return image;
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
@@ -58,4 +67,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   uploadImage,
+  getImage,
 };

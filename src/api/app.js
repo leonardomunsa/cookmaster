@@ -12,6 +12,7 @@ const {
   updateRecipes,
   deleteRecipes,
   uploadImages,
+  getImages,
 } = require('../controllers/recipesControllers');
 
 const app = express();
@@ -34,6 +35,7 @@ app.get('/recipes/:id', getRecipe);
 app.put('/recipes/:id', auth, updateRecipes);
 app.delete('/recipes/:id', auth, deleteRecipes);
 app.put('/recipes/:id/image/', auth, uploadImg.single('image'), uploadImages);
+app.get('/images/:img', getImages);
 
 app.use(errorHandler);
 

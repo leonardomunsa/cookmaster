@@ -5,6 +5,7 @@ const {
   updateOneRecipe,
   deleteOneRecipe,
   uploadOneImage,
+  getOneImage,
 } = require('../services/recipesServices');
 const { created, success, noContent } = require('../utils/dictionary');
 
@@ -98,6 +99,19 @@ const uploadImages = async (req, res, next) => {
   }
 };
 
+const getImages = async (req, res, next) => {
+  try {
+    const { img } = req.params;
+
+    const image = await getOneImage(img);
+    
+    return res.status(success).json(image);
+  } catch (error) {
+    console.log(`GET IMAGE ->  ${error.message}`);
+    next(error);
+  }
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
@@ -105,4 +119,5 @@ module.exports = {
   updateRecipes,
   deleteRecipes,
   uploadImages,
+  getImages,
 };
