@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const uploadImg = require('../middlewares/uploadImg');
 const auth = require('../middlewares/auth');
 const errorHandler = require('../middlewares/errorHandler');
 const { createUsers, logUsers } = require('../controllers/usersControllers');
@@ -10,6 +11,7 @@ const {
   getRecipe,
   updateRecipes,
   deleteRecipes,
+  uploadImages,
 } = require('../controllers/recipesControllers');
 
 const app = express();
@@ -31,6 +33,7 @@ app.get('/recipes', getRecipes);
 app.get('/recipes/:id', getRecipe);
 app.put('/recipes/:id', auth, updateRecipes);
 app.delete('/recipes/:id', auth, deleteRecipes);
+app.put('/recipes/:id/image/', auth, uploadImg.single('image'), uploadImages);
 
 app.use(errorHandler);
 
